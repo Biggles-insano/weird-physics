@@ -7,10 +7,10 @@ use math::Vec3;
 use camera::Camera;
 
 fn main() {
-    let mut w: usize = 960;
-    let mut h: usize = 540;
+    let mut w: usize = 640;
+    let mut h: usize = 360;
     let mut window = Window::new(
-        "Diorama — Flechas: yaw/pitch | Z/X: roll | Q/E: dolly",
+        "Diorama (modo fluido) — Flechas: yaw/pitch | Z/X: roll | Q/E: dolly",
         w, h, WindowOptions { resize: true, scale: minifb::Scale::X1, ..WindowOptions::default() }
     ).unwrap();
 
@@ -57,7 +57,7 @@ fn main() {
             for i in 0..w {
                 let x = ((i as f32)*inv_w)*2.0 - 1.0; // [-1,1]
                 let ray = cam.ray_for(x, -y); // y invertida para imagen
-                let col = scene.trace(&ray, 2).clamp01(); // 1 rebote máx
+                let col = scene.trace(&ray, 1).clamp01(); // 0/1 rebote máx
                 fb[j*w+i] = rgb_u32(col.x, col.y, col.z);
             }
         }
